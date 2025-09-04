@@ -209,6 +209,8 @@ message TripLeg {
     bool country_crossing = 58;
     bool forward = 59;
     repeated ConditionalSpeedLimit conditional_speed_limits = 60;
+    bool way_forward = 100; // OSM way direction
+    string shape = 101;     // Edge shape
   }
 
   message IntersectingEdge {

@@ -1487,6 +1487,20 @@ TripLeg_Edge* AddTripEdge(const AttributesController& controller,
     trip_edge->set_truck_route(true);
   }
 
+  if (controller.attributes.at(kEdgeWayForward)) {
+    trip_edge->set_way_forward(directededge->forward());
+  }
+
+  if (controller.attributes.at(kEdgeShape) && !edgeinfo.shape().empty()) {
+    std::array<midgard::PointLL, 2> shape = {edgeinfo.shape().front(), edgeinfo.shape().back()};
+    
+    if (!directededge->forward()) {
+      std::swap(shape[0], shape[1]);
+    }
+    
+    trip_edge->set_shape(midgard::encode(shape));
+  }
+
   /////////////////////////////////////////////////////////////////////////////
   // Process transit information
   if (trip_id && (directededge->use() == Use::kRail || directededge->use() == Use::kBus)) {
